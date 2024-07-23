@@ -46,10 +46,46 @@ WordPress plugin development involves creating custom functionality to enhance o
 4. **Create Additional Files**:
    If your plugin is complex, you might need additional PHP files for organization. Create an `includes` folder within your plugin directory and include these files as needed. 📁
 
-5. **Test Your Plugin**:
+5. **Add Admin Menu**:
+   Add a custom menu item to the WordPress admin panel to manage plugin settings.
+
+   **Example:**
+
+   ```php
+   // Add a custom menu item
+   function my_plugin_menu() {
+       add_menu_page(
+           'My Custom Plugin',          // Page title
+           'Custom Plugin',             // Menu title
+           'manage_options',            // Capability
+           'my-custom-plugin',          // Menu slug
+           'my_plugin_settings_page',   // Function to display the settings page
+           'dashicons-admin-generic'    // Icon URL
+       );
+   }
+   add_action('admin_menu', 'my_plugin_menu');
+
+   // Display the settings page
+   function my_plugin_settings_page() {
+       ?>
+       <div class="wrap">
+           <h1>My Custom Plugin Settings</h1>
+           <form method="post" action="options.php">
+               <?php
+               settings_fields('my_plugin_options_group');
+               do_settings_sections('my-custom-plugin');
+               submit_button();
+               ?>
+           </form>
+       </div>
+       <?php
+   }
+   ```
+
+6. **Test Your Plugin**:
    Activate your plugin from the WordPress admin panel and test its functionality thoroughly to ensure it works as expected. 🧪
 
-6. **Provide Documentation**:
+7. **Provide Documentation**:
    Include a README file with instructions on how to use and configure your plugin. 📚
 
 ### Example Plugin Structure 🗂️
@@ -76,6 +112,7 @@ my-custom-plugin/
 - **Enqueue Scripts and Styles:** Add JavaScript and CSS to your plugin. 🎨
 - **Shortcodes:** Add custom functionality to posts and pages. 📜
 - **Database Operations:** Interact with the WordPress database using `wpdb`. 💾
+- **Admin Menu:** Add custom admin menu items and settings pages. 🖥️
 
 ## Installation 🛠️
 
@@ -233,4 +270,5 @@ The `wpdb` class allows you to interact with the WordPress database.
 
 ## Contributing 🤝
 
-Feel free to contribute by submitting issues or pull requests. Your feedback and improvements are always welcome!
+Feel free to contribute by submitting issues or pull requests. Your feedback and improvements
+ are always welcome!
